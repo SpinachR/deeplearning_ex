@@ -120,21 +120,23 @@ print("start training......")
 init = tf.global_variables_initializer()
 
 with tf.device('/gpu:1'):
-	with tf.Session() as sess:
-	    sess.run(init)
-	    step = 1
-	    # Keep training until reach max iterations
-	    while step * batch_size < training_iters:
-	        batch_xs, batch_ys = mnist.train.next_batch(batch_size)
+    with tf.Session() as sess:
+        sess.run(init)
+        step = 1
+        # Keep training until reach max iterations
+        while step * batch_size < training_iters:
+            batch_xs, batch_ys = mnist.train.next_batch(batch_size)
 
-	        sess.run(train, feed_dict={X: batch_xs, Y_: batch_ys, keep_prob: dropout})
-	        if step % display_step == 0:
-	            # calc train accuracy
-	            acc = sess.run(accuracy, feed_dict={X: batch_xs, Y_: batch_ys, keep_prob: 1.})
-	            # calc loss
-	            loss = sess.run(loss, feed_dict={X: batch_xs, Y_: batch_ys, keep_prob: 1.})
-	            print("Iter " + str(step*batch_size) + ", Minibatch Loss= " + "{:.6f}".format(loss) + ", Training Accuracy= " + "{:.5f}".format(acc))
-	        step += 1
-	    print("Optimization Finished!")
-	    # calc test accuracy
-	    print("Testing Accuracy:", sess.run(accuracy, feed_dict={X: mnist.test.images[:256], Y_: mnist.test.labels[:256], keep_prob: 1.}))
+            sess.run(train, feed_dict={X: batch_xs, Y_: batch_ys, keep_prob: dropout})
+            if step % display_step == 0:
+                # calc train accuracy
+                acc = sess.run(accuracy, feed_dict={X: batch_xs, Y_: batch_ys, keep_prob: 1.})
+                # calc loss
+                loss = sess.run(loss, feed_dict={X: batch_xs, Y_: batch_ys, keep_prob: 1.})
+                print("Iter " + str(step * batch_size) + ", Minibatch Loss= " + "{:.6f}".format(
+                    loss) + ", Training Accuracy= " + "{:.5f}".format(acc))
+            step += 1
+        print("Optimization Finished!")
+        # calc test accuracy
+        print("Testing Accuracy:",
+        sess.run(accuracy, feed_dict={X: mnist.test.images[:256], Y_: mnist.test.labels[:256], keep_prob: 1.}))
