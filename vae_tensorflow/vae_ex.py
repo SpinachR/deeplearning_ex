@@ -116,9 +116,9 @@ def train_model(model, batch_size, num_train_steps):
             _, cur_loss, summary_op = sess.run([model.optimizer, model.loss, model.summary_op], feed_dict={model.x: batch[0]})
             summary_writer.add_summary(summary_op, global_step=step)
 
-        if step % 100 == 0:
-            save_path = saver.save(sess, "checkpoints/model.ckpt", global_step=step)
-            print("Step {0} | Loss: {1}".format(step, cur_loss))
+		    if step % 100 == 0:
+			    save_path = saver.save(sess, "checkpoints/model.ckpt", global_step=step)
+			    print("Step {0} | Loss: {1}".format(step, cur_loss))
 
 
 
