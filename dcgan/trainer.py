@@ -124,7 +124,7 @@ class Trainer(object):
                 for i in range(10):
                     imname = os.path.join(config.sampledir,
                                           str(step + 1) + "_" + str(i + 1) + ".jpg")
-                    scipy.misc.imsave(imname, gen[i])
+                    scipy.misc.imsave(imname, np.squeeze(gen[i], axis=2))
 
     def sample(self, sample_size):
         config = self.config
